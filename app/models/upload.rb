@@ -51,21 +51,7 @@ class Upload < ActiveRecord::Base
     image_queue    = ch.queue("image_cropper")
     ch.default_exchange.publish(crop_data.to_yaml, :routing_key => image_queue.name)
     puts " [x] Sent Image description"
-    wait_for_reprocess(conn, ch)
+    conn.close
   end
 
-  def wait_for_reprocess(conn, ch)
-    path_queue   = ch.queue('image_path')
-    begin
-    puts " [*] Waiting for messages. To exit press CTRL+C"
-    path_queue.subscribe(:block => true) do |delivery_info, properties, body|
-      puts " [x] Received file path - #{body}"
-      conn.close
-    end
-  rescue Interrupt => _
-    conn.close
-    exit(0)
-  end
-  conn.close
-  end
 end
