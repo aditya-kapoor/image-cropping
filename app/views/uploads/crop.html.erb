@@ -1,0 +1,29 @@
+<h1> Crop Image </h1>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "jquery.Jcrop" %>
+  <%= javascript_include_tag "jquery.Jcrop" %>
+  <script type="text/javascript">
+  $(function(){
+    $('#cropbox').Jcrop({
+      onChange: updateCropCoords,
+      onSelect: updateCropCoords,
+      setSelect: [0,0,100,100],
+      aspectRatio: Math.round($(this).width() / $(this).height())
+    })
+  })
+  function updateCropCoords(coords){
+    $('#crop_x').val(coords.x)
+    $('#crop_y').val(coords.y)
+    $('#crop_w').val(coords.w)
+    $('#crop_h').val(coords.h)
+  }
+  </script>
+<% end %>
+<%= image_tag @upload.image.url, id: "cropbox" %>
+
+<%= form_for @upload do |f| %>
+  <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
+    <%= f.text_field attribute, id: attribute, readonly: true %>
+  <% end %>
+  <%= f.submit "Crop" %>
+<% end %>

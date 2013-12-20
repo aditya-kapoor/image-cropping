@@ -1,0 +1,22 @@
+development:
+  adapter: mysql2
+  database: cropper_development
+  username: root
+  password: 
+  pool: 5
+  timeout: 5000
+test:
+  adapter: mysql2
+  database: cropper_test
+  username: root
+  password:
+  pool: 5
+  timeout: 5000
+
+production:
+  adapter: mysql2
+  database: cropper_production
+  username: root
+  password:
+  pool: 5
+  timeout: 5000

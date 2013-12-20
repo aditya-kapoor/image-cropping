@@ -1,0 +1,10 @@
+<%= form_for @upload, :html => { :multipart => true } do |f| %>
+  <% if @upload.errors.any? %>
+    <%= render "shared/errors", :object => @upload %>
+  <% end %>
+  <p>
+    <b><%= f.label "Select An Image For Cropping..." %></b>
+    <%= f.file_field :image %>
+  </p>
+  <p><%= f.submit "Submit" %></p>
+<% end %>
