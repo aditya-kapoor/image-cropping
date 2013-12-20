@@ -10,6 +10,14 @@
   <p><%= image_tag @upload.image.url(:cropped) %></p>
 </div>
 
+
+<div>
+  <h3> Resized Image </h3>
+  <% Upload::RESIZE_THUMBNAILS.keys.each do |style| %>
+    <p><%= image_tag @upload.image.url(style) %></p>
+  <% end %>
+</div>
+
 <p>
   <%= link_to "Resize", resize_upload_path(@upload), remote: true %> |
   <%= link_to "Crop", crop_upload_path(@upload) %> |
