@@ -1,6 +1,6 @@
 class UploadsController < ApplicationController
   
-  before_filter :load_upload, only: [:update, :crop, :show, :destroy]
+  before_filter :load_upload, only: [:update, :crop, :show, :destroy, :resize]
 
   def new 
     @upload = Upload.new
@@ -19,9 +19,6 @@ class UploadsController < ApplicationController
   def show
   end
 
-  def crop
-  end
-
   def update
     if @upload.update_attributes(params[:upload])
       flash[:notice] = "Successfully updated Upload."
@@ -38,6 +35,15 @@ class UploadsController < ApplicationController
     else
       flash[:alert] = "Upload was not destroyed"
       redirect_to @upload
+    end
+  end
+
+  def crop
+  end
+
+  def resize
+    respond_to do |format|
+      format.js { @upload.generate_thumbnails }
     end
   end
 
