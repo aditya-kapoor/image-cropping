@@ -11,6 +11,7 @@
 </div>
 
 <p>
+  <%= link_to "Resize", resize_upload_path(@upload), remote: true %> |
   <%= link_to "Crop", crop_upload_path(@upload) %> |
   <%= link_to "Destroy", @upload, :confirm => 'Are you sure?', :method => :delete %>
 </p>
