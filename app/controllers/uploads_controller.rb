@@ -23,7 +23,7 @@ class UploadsController < ApplicationController
   end
 
   def update
-    if @upload.update_attributes(params[:user])
+    if @upload.update_attributes(params[:upload])
       flash[:notice] = "Successfully updated Upload."
       redirect_to @upload
     else

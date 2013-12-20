@@ -1,6 +1,6 @@
 <h1>Upload</h1>
 
-<p><%= image_tag @upload.image.url %></p>
+<p><%= image_tag @upload.image.url(:cropped) %></p>
 
 <p>
   <%= link_to "Crop", crop_upload_path(@upload) %> |
