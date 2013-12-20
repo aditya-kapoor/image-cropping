@@ -42,9 +42,8 @@ class UploadsController < ApplicationController
   end
 
   def resize
-    respond_to do |format|
-      format.js { @upload.generate_thumbnails }
-    end
+    @upload.generate_thumbnails
+    redirect_to @upload
   end
 
   private 
