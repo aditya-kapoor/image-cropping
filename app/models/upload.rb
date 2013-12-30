@@ -18,8 +18,8 @@ class Upload < ActiveRecord::Base
     conn = Bunny.new(:automatically_recover => false)
     conn.start
     resize_channel = conn.create_channel
-    image_queue    = resize_channel.queue("image_cropper")
-    resize_channel.default_exchange.publish(resize_data.to_yaml, :routing_key => image_queue.name)
+    x = resize_channel.direct("resize_router", durable: true, auto_delete: true)
+    x.publish(resize_data.to_yaml, :routing_key => "resizer")  
     puts " [x] Sent Image For Resizing"
   end
 
@@ -48,8 +48,8 @@ class Upload < ActiveRecord::Base
     conn = Bunny.new(:automatically_recover => false)
     conn.start
     ch   = conn.create_channel
-    image_queue    = ch.queue("image_cropper")
-    ch.default_exchange.publish(crop_data.to_yaml, :routing_key => image_queue.name)
+    x = ch.direct("crop_router1", durable: true, auto_delete: true)
+    x.publish(crop_data.to_json, :routing_key => "cropper")
     puts " [x] Sent Image description"
     conn.close
   end
